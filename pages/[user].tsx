@@ -1,17 +1,22 @@
 import React from 'react'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { NextRouter, useRouter } from 'next/router'
+import { GetServerSideProps } from 'next';
+import { AppProps } from 'next/app';
 
-const User = (props) => {
-  console.log(props)
-  const router = useRouter();
+const User: React.FC<AppProps> = (props: AppProps) => {
+  const router: NextRouter = useRouter();
   const { user } = router.query;
   return (
     <div>
+      <Link href="/higor-dev">
+        <a>go to {user}</a>
+      </Link>
     </div>
   )
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       token: process.env.TOKEN
