@@ -6,16 +6,17 @@ interface InputProps {
   data: any;
 }
 
-const Profile: React.FC<InputProps> = ({ data }) => {
-  console.log(data);
+const Profile: React.FC<InputProps> = (props) => {
+
+  const { data } = props;
   return (
     <Container>
       <Flex>
-
-        <div>
-          <h1>{data.viewer.name}</h1>
-          <h2>{data.viewer.login}</h2>
-        </div>
+          <Avatar src={data.viewer.avatarUrl} />
+          <div>
+            <h1>{data.viewer.name}</h1>
+            <h2>{data.viewer.login}</h2>
+          </div>
       </Flex>
 
       <Row>
@@ -37,7 +38,7 @@ const Profile: React.FC<InputProps> = ({ data }) => {
             <span>{data.viewer.location}</span>
           </li>
         )}
-        {data.viewer.location && (
+        {data.viewer.email && (
           <li>
             <EmailIcon />
             <span>{data.viewer.email}</span>
