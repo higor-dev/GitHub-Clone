@@ -11,9 +11,35 @@ export const USER_LIST = gql`
       following {
         totalCount
       }
+      starredRepositories {
+        totalCount
+      }
       login
       location
       email
     }
   }
+`
+
+export const REPOSITORIES = gql`
+query {
+  viewer {
+    pinnedItems(first: 6, types: REPOSITORY) {
+      nodes {
+        ... on Repository {
+          name
+          description
+          primaryLanguage {
+            name
+            color
+          }
+          stargazers {
+            totalCount
+          }
+        }
+      }
+    }
+  }
+}
+
 `
