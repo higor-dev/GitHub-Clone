@@ -1,29 +1,36 @@
 import React from "react";
 import Link from "next/link";
-import { NextRouter, useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { AppProps } from "next/app";
-import { Container, Main, Left, Right } from "../styles/UserStyles/styles";
+import { Container, Main, Left, Right, Repos } from "../styles/UserStyles/styles";
 import Profile from '../components/Profile';
-import { USER_LIST } from './api/apolloClient/user/user';
+import { USER_LIST, REPOSITORIES } from './api/apolloClient/user/user';
 import { client } from "./api/apolloClient";
-import Header from "../components/Header";
+import Card from "../components/Card";
 
-const User: React.FC<AppProps> = (props: AppProps) => {
 
-  const router: NextRouter = useRouter();
-  const { user } = router.query;
+const User: React.FC = (props: any) => {
+
+
+  const { userData, repoData } = props;
 
 
   return (
     <>
-      <Header/>
+
       <Container>
         <Main>
           <Left>
-            <Profile data={props} />
+            <Profile data={userData.data} />
           </Left>
-          <Right></Right>
+          <Right>
+          <h2>Pinned</h2>
+            <Repos>
+              {repoData.data.viewer.pinnedItems.nodes.map((node: any) =>
+                <Card key={node.name} data={node} />
+              )}
+            </Repos>
+          </Right>
         </Main>
       </Container>
     </>
@@ -32,12 +39,18 @@ const User: React.FC<AppProps> = (props: AppProps) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
 
-  const { data } = await client.query({
+  const userData = await client.query({
     query: USER_LIST
   })
 
+  const repoData = await client.query({
+    query: REPOSITORIES
+  })
   return {
-    props: data
+    props: {
+      userData: userData,
+      repoData: repoData
+    }
   };
 };
 
