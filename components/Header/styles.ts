@@ -2,11 +2,19 @@ import styled from 'styled-components';
 import { FaGithub } from 'react-icons/fa';
 
 export const Container = styled.div`
-  display: flex;
-  align-items: center;
+
   background: var(--header);
-  padding: 14px 32px
+  padding: 14px 0;
+
 `;
+
+export const Margin = styled.div`
+
+  display: flex;
+  margin: 0 auto;
+  max-width: 1280px;
+
+`
 
 export const GithubLogo = styled(FaGithub)`
 
