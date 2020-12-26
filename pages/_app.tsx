@@ -7,8 +7,9 @@ import {client } from './api/apolloClient/index'
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return <>
     <ApolloProvider client={client}>
-    <Component {...pageProps} />
-    <GlobalStyle />
+        <Header />
+        <Component {...pageProps} />
+        <GlobalStyle />
     </ApolloProvider>
   </>
 }
